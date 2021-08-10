@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_assignment/screens/Step-1/city.dart';
-import 'package:flutter_assignment/screens/weather/controller.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_assignment/shared/BlocObServer.dart';
 
 void main() {
-  DioHelper.init();
   Bloc.observer = MyBlocObserver();
   runApp(MyApp());
 }
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-      home: CityScreen(),
+      home: City(),
     );
   }
 }

@@ -6,10 +6,21 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'weather-cubit/cubit.dart';
 import 'weather-cubit/states.dart';
 
-class WeatherDescription extends StatelessWidget {
+class WeatherData extends StatefulWidget {
+  @override
+  _WeatherDescriptionState createState() => _WeatherDescriptionState();
+}
+
+class _WeatherDescriptionState extends State<WeatherData> {
+  Weather dataModel;
+
+  void initState() {
+    super.initState();
+    dataModel = Weather();
+  }
+
   @override
   Widget build(BuildContext context) {
-    WeatherData userData;
     return Padding(
         padding: const EdgeInsets.only(bottom: 30.0),
         child: BlocProvider(
@@ -20,17 +31,38 @@ class WeatherDescription extends StatelessWidget {
               return ConditionalBuilder(
                 condition: state is! WeatherGetLoadingState,
                 builder: (context) => Center(
-                  child: Text(
-                    '${userData.description}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${dataModel.weather[0].description}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(dataModel.main.temp.toString()),
+                        trailing: Icon(Icons.thermostat_outlined),
+                      ),
+                      ListTile(
+                        title: Text(dataModel.main.tempMin.toString()),
+                        trailing: Icon(Icons.thermostat_outlined),
+                      ),
+                      ListTile(
+                        title: Text(dataModel.main.tempMax.toString()),
+                        trailing: Icon(Icons.thermostat_outlined),
+                      ),
+                      ListTile(
+                        title: Text(dataModel.wind.speed.toString()),
+                        trailing: Icon(Icons.thermostat_outlined),
+                      ),
+                    ],
                   ),
                 ),
-                fallback: (context) =>
-                    Center(child: CircularProgressIndicator()),
+                fallback: (context) => Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             },
           ),
