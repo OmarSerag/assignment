@@ -22,50 +22,37 @@ class _WeatherDescriptionState extends State<WeatherData> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(bottom: 30.0),
-        child: BlocProvider(
-          create: (BuildContext context) => WeatherCubit(),
-          child: BlocConsumer<WeatherCubit, WeatherState>(
-            listener: (BuildContext context, state) {},
-            builder: (context, state) {
-              return ConditionalBuilder(
-                condition: state is! WeatherGetLoadingState,
-                builder: (context) => Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        '${dataModel.weather[0].description}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      ListTile(
-                        title: Text(dataModel.main.temp.toString()),
-                        trailing: Icon(Icons.thermostat_outlined),
-                      ),
-                      ListTile(
-                        title: Text(dataModel.main.tempMin.toString()),
-                        trailing: Icon(Icons.thermostat_outlined),
-                      ),
-                      ListTile(
-                        title: Text(dataModel.main.tempMax.toString()),
-                        trailing: Icon(Icons.thermostat_outlined),
-                      ),
-                      ListTile(
-                        title: Text(dataModel.wind.speed.toString()),
-                        trailing: Icon(Icons.thermostat_outlined),
-                      ),
-                    ],
-                  ),
-                ),
-                fallback: (context) => Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
-          ),
-        ));
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Center(
+        child: Column(
+          children: [
+            Text(
+              '${dataModel.weather[0].description}',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 20.0,
+              ),
+            ),
+            ListTile(
+              title: Text(dataModel.main.temp.toString()),
+              trailing: Icon(Icons.thermostat_outlined),
+            ),
+            ListTile(
+              title: Text(dataModel.main.tempMin.toString()),
+              trailing: Icon(Icons.thermostat_outlined),
+            ),
+            ListTile(
+              title: Text(dataModel.main.tempMax.toString()),
+              trailing: Icon(Icons.thermostat_outlined),
+            ),
+            ListTile(
+              title: Text(dataModel.wind.speed.toString()),
+              trailing: Icon(Icons.thermostat_outlined),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
