@@ -1,4 +1,4 @@
-# flutter_assignment
+# flutter_weather_assignment
 
 A new Flutter project.
 

@@ -1,18 +1,31 @@
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import 'model.dart';
 
-Future<Weather> fetchData(String City) async {
-  final response = await http
-      .get(Uri.parse('http://api.openweathermap.org/data/2.5/weather?q=$City&appid=9c15af06166e304ab03ac7075db2b74a'));
 
-  if (response.statusCode == 200) {
+class DioHelper {
+  static Dio dio;
 
-    return Weather.fromJson(jsonDecode(response.body));
-  } else {
+  static Future<WeatherModel> getWeather({String city, String id}) async {
+    Map<String, dynamic> body = {
+      'q': city,
+      'appid': id,
+    };
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 5000,
+        receiveTimeout: 3000,
+        queryParameters: body,
+        validateStatus: (v) {
+          return true;
+        }
 
-    throw Exception('Failed to load Weather');
+    );
+    Dio _dio = Dio(options);
+    final _result = await _dio.get(
+      'http://api.openweathermap.org/data/2.5/weather',
+    );
+    final WeatherModel weatherResponse = WeatherModel.fromJson(_result.data);
+    return weatherResponse;
   }
 }
